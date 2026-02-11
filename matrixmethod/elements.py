@@ -68,14 +68,17 @@ class Element:
 
         self.L = np.sqrt((self.nodes[1].x - self.nodes[0].x)**2.0 + (self.nodes[1].z - self.nodes[0].z)**2.0)
 
-        alpha = np.arctan2 #YOUR CODE HERE
+        dx = self.nodes[1].x - self.nodes[0].x
+        dz = self.nodes[1].z - self.nodes[0].z
+
+        alpha = -np.arctan2(dz,dx) 
 
         T = np.zeros((6, 6))
 
-        T[0, 0] = T[1, 1] = T[3, 3] = T[4, 4] #YOUR CODE HERE
-        T[0, 1] = T[3, 4] #YOUR CODE HERE
-        T[1, 0] = T[4, 3] #YOUR CODE HERE
-        T[2, 2] = T[5, 5] #YOUR CODE HERE
+        T[0, 0] = T[1, 1] = T[3, 3] = T[4, 4] = np.cos(alpha)
+        T[0, 1] = T[3, 4] = np.sin(alpha)
+        T[1, 0] = T[4, 3] = -np.sin(alpha)
+        T[2, 2] = T[5, 5] = 1
 
         self.T = T
         self.Tt = np.transpose(T)
