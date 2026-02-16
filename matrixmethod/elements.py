@@ -132,7 +132,16 @@ class Element:
         EI = self.EI
         L = self.L
 
-        #YOUR CODE HERE
+        k = np.zeros((6, 6))
+
+        k[0, 0] = k[3, 3] = EA / L
+        k[0, 3] = k[3, 0] = -EA / L
+        k[1, 1] = k[4, 4] = 12*EI / L**3
+        k[1, 4] = k[4, 1] = -12*EI / L**3
+        k[1, 5] = k[5, 1] = k[1, 2] = k[2, 1] = -6*EI / L**2
+        k[2, 4] = k[4, 2] = k[4, 5] = k[5, 4] = 6*EI / L**2
+        k[2, 2] = k[5, 5] = 4*EI / L
+        k[2, 5] = k[5, 2] = 2*EI / L
 
         return np.matmul(np.matmul(self.Tt, k), self.T)
 
